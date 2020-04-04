@@ -86,7 +86,7 @@ class AminoAcidLL{
         }
 
         if (next == null) {
-            if (inList.next == null) return totalDiff(inList);
+            if (inList.next == null)  return totalDiff(inList);
             int a = totalCount();
             while (inList != null) {
                a -= inList.totalCount();
@@ -174,9 +174,8 @@ class AminoAcidLL{
 
   /********************************************************************************************/
   /* recursively determines if a linked list is sorted or not */
-  //DONE
   public boolean isSorted(){
-    if (next == null) return true;
+    if (this.next == null)  return true;
     if (aminoAcid < next.aminoAcid) return next.isSorted();
     return false;
   }
@@ -249,6 +248,24 @@ class AminoAcidLL{
   }
 
   /********************************************************************************************/
+  /* Checks if an AminoAcid Linked List is equal to other */
+  public boolean AALLCompare(AminoAcidLL inList) {
+      if (this == null && inList == null) return true;
+      if (next == null && inList.next == null) {
+          if (singleCodonCompare(inList)) return true;
+          else return false;
+      }
+      if (!singleCodonCompare(inList)) return false;
+      return next.AALLCompare(inList.next);
+  }
+
+  public boolean singleCodonCompare (AminoAcidLL inList) {
+      if (aminoAcid != inList.aminoAcid) return false;
+      for (int i = 0; i < counts.length; i++)
+          if (counts[i] != inList.counts[i]) return false;
+      return true;
+  }
+
   /*Prints AminoAcid Linked List Character and codons with its counts*/
   public static void print(AminoAcidLL list) {
     while (list != null) {
@@ -264,6 +281,7 @@ class AminoAcidLL{
     }
   }
 
+  /*
   //ELIMINATE.JUST FOR TESTING
   public static void print1(char[] a) {
       for (int i = 0; i < a.length; i++)
@@ -273,5 +291,5 @@ class AminoAcidLL{
   public static void print2(int[] a) {
       for (int i = 0; i < a.length; i++)
           System.out.print(a[i] + " ");
-  }
+  } */
 }
